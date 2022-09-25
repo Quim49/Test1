@@ -4,7 +4,7 @@
     
 </head>
 <body>
-    <div id="text"> Test 2 </div>
+    <div id="text"> Test 3 </div>
     <div id="orderTotal">  </div>
     
     <button type="submit" class="style" onclick="getOrder()">Get Order</button>
@@ -29,33 +29,21 @@
     <button type="submit" class="style" onclick="closeModal()">Close</button>
     
     <script>
-        function getOrder(then){   
-            RevoLoyalty.getOrder(function(jsonOrder) {
-                document.getElementById('output3').innerHTML += "<br><br>Comienzo del getOrder<br>";
-                var order = JSON.parse(jsonOrder);
-                document.getElementById('output3').innerHTML += "<br><br>Info del pedido:<br>";
-
-                var propertiesOrder = Object.getOwnPropertyNames(order);
-                for(var i = 0; i < propertiesOrder.length; i++) {
-                    document.getElementById('output3').innerHTML += propertiesOrder[i] + ": " + order[propertiesOrder[i]] + "<br>";
-                }
-                then()
+        function getOrder(){
+            RevoLoyalty.getOrder(function(json) {
+                var order = JSON.parse(json)
+                document.getElementById("text").innerHTML = json
+                document.getElementById("orderTotal").innerHTML = "Order total: "+ order["total"]
             })
         }
         
-        function getAccount(then){
-            RevoLoyalty.getAccount(function(jsonAccount) {
-                document.getElementById('output2').innerHTML += "<br><br>Comienzo del getAccount<br>";
-                var account = JSON.parse(jsonAccount);
-                document.getElementById('output2').innerHTML += "<br><br>Info del account: " + account['id'] +"<br>";
-            
-                var propertiesAccount = Object.getOwnPropertyNames(account);
-                for(var i = 0; i < propertiesAccount.length; i++) {
-                    document.getElementById('output2').innerHTML += propertiesAccount[i] + ": " + account[propertiesAccount[i]] + "<br>";
-                }
-                then()
+        function getAccount(){
+            RevoLoyalty.getAccount(function(json) {
+                var items = JSON.parse(json)
+                document.getElementById("text").innerHTML = json
+                document.getElementById("orderTotal").innerHTML = "Account id: "+ account["id"]
             })
-        }   
+        }
         
         function getItems(){
             RevoLoyalty.getItems([1, 2, 3], function(json) {
